@@ -30,10 +30,10 @@ The system allows the robot to navigate autonomously while avoiding obstacles an
 | HC-SR04 Echo   | GPIO 4        |
 | APDS-9930 SDA  | GPIO 21       |
 | APDS-9930 SCL  | GPIO 22       |
-| L298N IN1      | GPIO 2        |
-| L298N IN2      | GPIO 14       |
-| L298N IN3      | GPIO 15       |
-| L298N IN4      | GPIO 13       |
+| L298N IN1      | GPIO 13        |
+| L298N IN2      | GPIO 15       |
+| L298N IN3      | GPIO 14       |
+| L298N IN4      | GPIO 2       |
 
 > ⚠️ Use 5V logic level for ESP32-CAM carefully. Double-check wiring before powering up.
 
@@ -101,7 +101,7 @@ Install via Arduino IDE > Library Manager:
 
 ## 📸 Preview
 
-![Project Image](https://example.com/smart-car-image.jpg) <!-- Replace with actual image URL -->
+![Project Image]([https://example.com/smart-car-image.jpg](https://www.iotzone.vn/wp-content/uploads/2024/03/cach-su-dung-esp32-tim-hieu-so-do-cahn.jpg)) <!-- Replace with actual image URL -->
 
 ---
 
