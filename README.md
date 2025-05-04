@@ -29,7 +29,7 @@ The system allows the robot to navigate autonomously while avoiding obstacles an
 | HC-SR04 Trigger| GPIO 12       |
 | HC-SR04 Echo   | GPIO 4        |
 | APDS-9930 SDA  | GPIO 16       |
-| APDS-9930 SCL  | GPIO 0        |
+| APDS-9930 SCL  | GPIO 3(rx)    |
 | L298N IN1      | GPIO 13       |
 | L298N IN2      | GPIO 15       |
 | L298N IN3      | GPIO 14       |
