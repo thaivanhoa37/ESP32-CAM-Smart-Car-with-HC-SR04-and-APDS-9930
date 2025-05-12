@@ -33,12 +33,14 @@ void handleMove() {
   if (server.hasArg("dir")) {
     String dir = server.arg("dir");
     if (dir == "F" || dir == "L" || dir == "R" || dir == "S" || dir == "B") {
-      Serial.write(dir.charAt(0));
-      Serial.println("Sent: " + dir);
+      Serial.write(dir.charAt(0)); // Chỉ gửi một ký tự lệnh
+      Serial.print("Sent command: "); // Debug qua Serial Monitor
+      Serial.println(dir);
       server.send(200, "text/plain", "Sent " + dir);
       return;
     }
   }
+  Serial.println("Invalid command received from client");
   server.send(400, "text/plain", "Invalid");
 }
 
@@ -131,7 +133,7 @@ void startCamera() {
 // Setup
 void setup() {
   delay(3000); // Power stabilization
-  Serial.begin(115200);
+  Serial.begin(9600); // Tốc độ baud khớp với Arduino Uno
   Serial.println("Booting...");
 
   startCamera();
