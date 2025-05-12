@@ -2,7 +2,7 @@ import gradio as gr
 import requests
 import time
 
-ESP32_IP = "http://172.20.10.8"
+ESP32_IP = "http://192.168.137.236"
 STREAM_URL = f"{ESP32_IP}:81/stream"
 MOVE_URL = f"{ESP32_IP}/move"
 
@@ -37,22 +37,26 @@ def dance_mode():
         return f"Dance command failed: {e}"
 
 with gr.Blocks() as demo:
-    gr.Markdown("## 🤖 Follow Me Robot Web UI")
+    gr.Markdown("## Robot Web control")
+    gr.Markdown("### ESP32-CAM Stream")
+
 
     gr.HTML(f"""
-        <h4>📷 Live ESP32-CAM Stream</h4>
-        <img src="{STREAM_URL}" width="320" height="240" />
+        <div style="text-align: center;">
+            <h4>ESP32-CAM Stream</h4>
+            <img src="{STREAM_URL}" width="320" height="240" />
+        </div>
     """)
 
     with gr.Row():
-        gr.Button("Forward").click(lambda: send_command("F"))
+        gr.Button("Forward").click(lambda: send_command("B"))
     with gr.Row():
         gr.Button("Left").click(lambda: send_command("L"))
         gr.Button("Stop").click(lambda: send_command("S"))
         gr.Button("Right").click(lambda: send_command("R"))
     with gr.Row():
-        gr.Button("Backward").click(lambda: send_command("B"))
-    with gr.Row():
-        gr.Button("Dancing Mode").click(dance_mode)
+        gr.Button("Backward").click(lambda: send_command("F"))
+    # with gr.Row():
+    #     gr.Button("Dancing Mode").click(dance_mode)
 
 demo.launch()
