@@ -47,8 +47,6 @@ This project features a smart car controlled by an ESP32-CAM board. The car supp
 | D9          | IN2       |
 | D10         | IN3       |
 | D11         | IN4       |
-| ❌ ENA      | Jumper to 5V |
-| ❌ ENB      | Jumper to 5V |
 | GND         | GND (shared with ESP32-CAM) |
 
 ### HC-SR04 Ultrasonic Sensor
