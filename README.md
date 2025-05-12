@@ -1,105 +1,99 @@
-# ESP32-CAM Smart Car with HC-SR04 and APDS-9930
+# 🚗 ESP32-CAM Smart Car with Obstacle Avoidance and Live Streaming
 
-This project is a smart robot car using the ESP32-CAM module. It combines:
-- **Camera streaming** for visual monitoring
-- **Ultrasonic sensor (HC-SR04)** for obstacle detection
-- **APDS-9930** for proximity and ambient light sensing
-- **L298N motor driver** for DC motor control
-
-The system allows the robot to navigate autonomously while avoiding obstacles and adapting behavior based on environmental light.
+This project features a smart car controlled by an ESP32-CAM board. The car supports live video streaming, remote direction control via web, and autonomous obstacle avoidance using an ultrasonic sensor.
 
 ---
 
-## 🔧 Components Used
+## 📷 Features
 
-- ESP32-CAM module  
-- HC-SR04 Ultrasonic Sensor  
-- APDS-9930 Proximity and Ambient Light Sensor  
-- L298N Motor Driver Module  
-- 2 DC Motors (with wheels and chassis)  
-- Li-ion Battery (7.4V recommended) or 5V regulated power  
-- Jumper wires and breadboard (optional)
+- Live video stream over Wi-Fi (ESP32-CAM at `/stream`)
+- Remote directional control via web interface (forward, backward, left, right, stop)
+- Automatic obstacle detection and avoidance using ultrasonic sensor (HC-SR04)
+- Visual feedback using green/red LEDs
+- Simple serial communication between ESP32-CAM and Arduino Uno (motor control)
 
 ---
 
-## 🔌 Wiring Overview
+## 🛠 Hardware Requirements
 
-| Component       | ESP32-CAM Pin |
-|----------------|---------------|
-| HC-SR04 Trigger| GPIO 12       |
-| HC-SR04 Echo   | GPIO 4        |
-| APDS-9930 SDA  | GPIO 16       |
-| APDS-9930 SCL  | GPIO 3(rx)    |
-| L298N IN1      | GPIO 13       |
-| L298N IN2      | GPIO 15       |
-| L298N IN3      | GPIO 14       |
-| L298N IN4      | GPIO 2        |
-
-> ⚠️ Use 5V logic level for ESP32-CAM carefully. Double-check wiring before powering up.
+| Component          | Quantity |
+|--------------------|----------|
+| ESP32-CAM (AI Thinker) | 1        |
+| Arduino Uno (or Nano) | 1        |
+| L298N Motor Driver     | 1        |
+| Ultrasonic Sensor (HC-SR04) | 1        |
+| 4x TT Motors (with wheels) | 2 (or 4) |
+| LEDs (Red + Green)     | 1 each   |
+| Jumper wires + Battery pack | -        |
 
 ---
 
-## 🚗 Features
+## ⚙️ Wiring Overview
 
-- Real-time video streaming via ESP32-CAM
-- Obstacle detection using HC-SR04 ultrasonic sensor
-- Light and proximity sensing using APDS-9930
-- DC motor control using L298N driver
-- Automatic navigation logic based on sensor input
+### ESP32-CAM
+- Connect to computer via FTDI or USB-UART
+- Streams video on `http://<ESP_IP>:81/stream`
+- Sends single-letter commands to Uno via Serial:
+  - `F` = Forward
+  - `B` = Backward
+  - `L` = Turn Left
+  - `R` = Turn Right
+  - `S` = Stop
 
----
+### Arduino Uno to L298N (motor control)
+| Arduino Pin | L298N Pin |
+|-------------|-----------|
+| D8          | IN1       |
+| D9          | IN2       |
+| D10         | IN3       |
+| D11         | IN4       |
+| ❌ ENA      | Jumper to 5V |
+| ❌ ENB      | Jumper to 5V |
+| GND         | GND (shared with ESP32-CAM) |
 
-## 🛠️ Project Steps
+### HC-SR04 Ultrasonic Sensor
+| Arduino Pin | Sensor Pin |
+|-------------|-------------|
+| A0          | Trig        |
+| A1          | Echo        |
 
-### 1. Assemble the Car Chassis
-- Mount the motors and wheels
-- Attach ESP32-CAM, L298N, and battery on the frame
-
-### 2. Connect the Circuit
-- Wire sensors and motor driver to ESP32-CAM as per the table above
-- Connect motor power (7.4V–12V) to L298N’s `VCC`, `GND`, and `5V OUT` if needed
-
-### 3. Upload the Code
-- Connect ESP32-CAM to PC via FTDI USB-to-Serial (IO0 to GND to enter flash mode)
-- Use Arduino IDE and select `AI Thinker ESP32-CAM` board
-- Upload code with:
-  - Camera stream
-  - Motor control
-  - Sensor integration (HC-SR04 + APDS-9930)
-
-### 4. Test Individual Modules
-- Test motor movement using simple digitalWrite test
-- Check camera stream via local IP
-- Read distance from ultrasonic sensor
-- Read ambient light/proximity values from APDS-9930
-
-### 5. Integrate and Tune Logic
-- Avoid obstacles when distance < 20cm
-- Adjust behavior if light < threshold
-- Optional: Send values to Serial Monitor for debugging
+### LEDs
+| Arduino Pin | Color  |
+|-------------|--------|
+| D3          | Green  |
+| D4          | Red    |
 
 ---
 
-## 📦 Libraries Required
+## 💻 Software
 
-Install via Arduino IDE > Library Manager:
-- `Wire.h` (built-in)
-- `Adafruit APDS9930` or equivalent
-- `NewPing.h` (or custom ultrasonic code)
-- `ESP32 WebServer` (included with ESP32 board package)
+### ESP32-CAM Code (Arduino)
+- Handles camera initialization
+- Sets up web server for stream and `/move?dir=F|B|L|R|S`
+- Sends command characters over `Serial` to Uno
 
----
-
-## 🌐 Future Improvements
-
-- Add remote control via smartphone (WiFi/Web UI)
-- AI image recognition (face/object detection)
-- Battery level monitoring
-- Data logging to Firebase or cloud IoT platform
+### Arduino Uno Code
+- Receives commands from ESP32-CAM via Serial
+- Controls motor driver via IN1–IN4
+- Measures distance via HC-SR04 and overrides commands if obstacle is detected
+- Turns 90° right to avoid obstacle
 
 ---
 
-## 📸 Preview
+## 📡 How to Use
+
+1. Flash both ESP32-CAM and Arduino Uno with the provided sketches.
+2. Power up both boards (use external battery pack for motors).
+3. Connect to Wi-Fi network (update SSID/password in ESP32-CAM code).
+4. Open a browser and go to `http://<ESP32-IP>:81/stream`.
+5. Use `/move?dir=F`, `/move?dir=B`, etc., to control the car.
+6. Car will automatically avoid obstacles if detected under 20cm.
+
+---
+
+## 📷 Example
+
+
 
 ![Project Image]([https://example.com/smart-car-image.jpg](https://www.iotzone.vn/wp-content/uploads/2024/03/cach-su-dung-esp32-tim-hieu-so-do-cahn.jpg)) <!-- Replace with actual image URL -->
 
