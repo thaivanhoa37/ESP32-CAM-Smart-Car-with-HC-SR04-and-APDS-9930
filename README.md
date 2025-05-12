@@ -139,7 +139,7 @@ This project features a smart car controlled by an ESP32-CAM board. The car supp
 
 ## 📷 Example
 
-![Project Image](https://www.iotzone.vn/wp-content/uploads/2024/03/cach-su-dung-esp32-tim-hieu-so-do-cahn.jpg)
+![Project Image]([https://www.iotzone.vn/wp-content/uploads/2024/03/cach-su-dung-esp32-tim-hieu-so-do-cahn.jpg](https://github.com/thaivanhoa37/ESP32-CAM-Smart-Car-with-Obstacle-Avoidance-and-Live-Streaming/blob/main/image/car%20(5).jpg))
 
 ---
 
